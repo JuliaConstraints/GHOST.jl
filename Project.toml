@@ -15,10 +15,10 @@ SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
 [sources]
-GHOST_jll = {url = "https://gitlab.naze.baffier.fr/others/GHOST_jll.jl.git", rev = "d247ca5c07159f712c6c7694f5803336ee3c987e"}
-CompositionalNetworks = {url = "https://gitlab.naze.baffier.fr/others/CompositionalNetworks.jl.git", rev = "fe5d21f31797d93391552919abc3d6e7a6db92d9"}
-ConstraintProgrammingExtensions = {url = "https://gitlab.naze.baffier.fr/others/ConstraintProgrammingExtensions.jl.git", rev = "04f270eaa8bf1a8cf07a4848225dcd77fee14cd3"}
-Constraints = {url = "https://gitlab.naze.baffier.fr/others/Constraints.jl.git", rev = "2b3897c3dba21ca26f0a467a958ace8de3d4128f"}
+GHOST_jll = {url = "https://github.com/JuliaConstraints/GHOST_jll.jl.git", rev = "d32e43e0afda0da43d2779e209a0b011624e0f43"}
+CompositionalNetworks = {url = "https://github.com/JuliaConstraints/CompositionalNetworks.jl.git", rev = "169d8f77840d498d6628ea9b1feb007d40a7dc60"}
+ConstraintProgrammingExtensions = {url = "https://github.com/JuliaConstraints/ConstraintProgrammingExtensions.jl.git", rev = "8c74772899742ebc007a717872c508420d2a423e"}
+Constraints = {url = "https://github.com/JuliaConstraints/Constraints.jl.git", rev = "9c9adabfe84f395aa3dd58eec6405c8e41020ffa"}
 
 [compat]
 CompositionalNetworks = "0.6.2"
@@ -28,7 +28,7 @@ GHOST_jll = "3.5.0"
 JuMP = "1"
 Libdl = "1"
 MathOptInterface = "1.48"
-SHA = "0.7"
+SHA = "0.7, 1"
 TOML = "1"
 julia = "1.12"
 

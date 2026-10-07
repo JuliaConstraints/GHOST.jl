@@ -90,7 +90,7 @@ MOI.get(optimizer::Optimizer, attr::MOI.AbstractVariableAttribute, index::MOI.Va
 MOI.get(optimizer::Optimizer, attr::MOI.AbstractConstraintAttribute, index::MOI.ConstraintIndex) = MOI.get(optimizer.cache, attr, index)
 MOI.get(optimizer::Optimizer, ::Type{T}, name::String) where {T<:Union{MOI.VariableIndex,MOI.ConstraintIndex}} = MOI.get(optimizer.cache, T, name)
 MOI.supports(optimizer::Optimizer, attr::Union{MOI.Name,MOI.ObjectiveSense}) = MOI.supports(optimizer.cache, attr)
-MOI.supports(::Optimizer, ::MOI.ObjectiveFunction{F}) where {F} = F in (MOI.VariableIndex,MOI.ScalarAffineFunction{Float64})
+MOI.supports(::Optimizer, ::MOI.ObjectiveFunction{F}) where {F} = F in (MOI.VariableIndex,MOI.ScalarAffineFunction{Float64}) || F <: CallbackObjective
 MOI.supports(optimizer::Optimizer, attr::Union{MOI.VariableName,MOI.VariablePrimalStart}, ::Type{MOI.VariableIndex}) = MOI.supports(optimizer.cache, attr, MOI.VariableIndex)
 MOI.supports(optimizer::Optimizer, attr::MOI.ConstraintName, ::Type{CI}) where {CI<:MOI.ConstraintIndex} = MOI.supports(optimizer.cache, attr, CI)
 
@@ -309,9 +309,6 @@ function _build_session(optimizer::Optimizer)
             end
         end
     end
-    if !isempty(session.callbacks) && optimizer.threads != 1
-        throw(ArgumentError("Julia error callbacks require one native thread per optimizer. Parallelize independent GHOST.Optimizer instances on Julia threads, each with its own workspace."))
-    end
     sense = MOI.get(cache, MOI.ObjectiveSense())
     if sense != MOI.FEASIBILITY_SENSE
         F = MOI.get(cache, MOI.ObjectiveFunctionType())
@@ -319,8 +316,19 @@ function _build_session(optimizer::Optimizer)
         if f isa MOI.VariableIndex
             f = MOI.ScalarAffineFunction([MOI.ScalarAffineTerm(1.0, f)], 0.0)
         end
-        scope, coefficients, constant = _affine_data(f, ids)
-        CAPI.set_objective(session, sense == MOI.MAX_SENSE, scope, coefficients, constant)
+        if f isa CallbackObjective
+            state = _add_objective_callback(session, Cint[ids[v] for v in f.variables],
+                _bind_error(f.f, length(f.variables)), sense == MOI.MAX_SENSE)
+            state.values .= Int[starting_point[v] for v in f.variables]
+            score = Float64(Base.invokelatest(state.f, state.values))
+            isfinite(score) || throw(DomainError(score, "Invalid initial objective evaluation"))
+        else
+            scope, coefficients, constant = _affine_data(f, ids)
+            CAPI.set_objective(session, sense == MOI.MAX_SENSE, scope, coefficients, constant)
+        end
+    end
+    if !isempty(session.callbacks) && optimizer.threads != 1
+        throw(ArgumentError("Julia callbacks require one native thread per optimizer. Parallelize independent GHOST.Optimizer instances on Julia threads, each with its own workspace."))
     end
     if has_starts
         for v in variables

@@ -72,7 +72,7 @@ function _catalogue_variant(set::MOICatalogue)
     return variant, prototype
 end
 
-function _schema_hash(network)
+function _schema(network::CN.ICN)
     available = parentindices(network.weights)[1]
     offset = 0
     parts = String[]
@@ -81,8 +81,13 @@ function _schema_hash(network)
         push!(parts, repr((layer.name, layer.mutex, operations)))
         offset += length(layer.fn)
     end
-    return bytes2hex(sha256("ICN:" * join(parts, ";")))
+    return "ICN:" * join(parts, ";")
 end
+_schema(network::CN.ComposedICN) = "Composed:" * repr(network.reductions) * join(
+    (_schema(c.network) * repr((c.inputs,c.bindings,c.repetitions,c.reductions))
+        for c in network.components), ";")
+_schema(network::CN.ViewICN) = "Views:" * repr((network.nodes,network.input,network.bindings)) * _schema(network.child)
+_schema_hash(network) = bytes2hex(sha256(_schema(network)))
 
 struct CatalogueEvaluator{E,S,M,B}
     evaluator::E
@@ -130,6 +135,10 @@ function _validate_catalogue(set::MOICatalogue, values)
     parameters = set.parameters
     if set.identity == :ordered
         return get(parameters, :reversed, false) ? issorted(values; rev=true) : issorted(values)
+    end
+    if set.identity in (:sum,:minimum,:maximum,:count,:nvalues)
+        parameters = merge((;op=(==)),parameters)
+        set.identity == :nvalues && (parameters = merge((;vals=Int[]),parameters))
     end
     return Constraints.concept(set.identity)(values; parameters...)
 end

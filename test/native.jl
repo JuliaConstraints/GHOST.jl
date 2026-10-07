@@ -10,6 +10,22 @@ function _started_model(; threads=1, objective=false)
     return model, x
 end
 
+@testset "Scoped objective callback and copied MOI function" begin
+    model, x = _started_model()
+    GHOST.set_callback_objective(model, MOI.MIN_SENSE, x, values -> -Float64(values[1]^2))
+    optimize!(model)
+    @test has_values(model)
+    @test objective_value(model) == -value(x[1])^2
+    source = unsafe_backend(model)
+    copied = GHOST.Optimizer()
+    MOI.copy_to(copied, source)
+    @test MOI.get(copied, MOI.ObjectiveFunctionType()) <: GHOST.CallbackObjective
+    MOI.set(copied, MOI.TimeLimitSec(), 0.02)
+    MOI.optimize!(copied)
+    @test MOI.get(copied, MOI.ResultCount()) == 1
+    @test only(filter(s -> s.objective, source.session.callbacks)).calls > 0
+end
+
 @testset "Native results checked in original integer model" begin
     for threads in (1, 2)
         model, x = _started_model(; threads)
@@ -81,7 +97,8 @@ end
         0.0
     end))
     @test_throws ErrorException optimize!(failure)
-    @test termination_status(failure) == MOI.OTHER_ERROR
+    # JuMP leaves its caching optimizer unsolved after optimize! throws.
+    @test MOI.get(unsafe_backend(failure), MOI.TerminationStatus()) == MOI.OTHER_ERROR
 
     parallel, p = _started_model(; threads=2)
     @constraint(parallel, p in GHOST.Error(values -> abs(sum(values) - 6)))

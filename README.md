@@ -11,8 +11,9 @@ Native baseline: upstream `richoux/GHOST` **develop**, commit
 `Azzaare/GHOST:forge/jump-wrapper-2026` is preserved and extended for Julia
 callbacks. `GHOST_jll` supplies the library or reuses `GHOST_LIBRARY` when set to
 an existing compatible library. A cached Artifact is reused without rebuilding
-or reinstalling it. Other platforms are unavailable until their binaries are
-built and qualified; the loader never substitutes a different solver.
+or reinstalling it. Tested native Artifacts are available for Linux
+x86_64/aarch64, macOS Intel/Apple Silicon and Windows x86_64, with corresponding
+GPL source included. Julia frontend qualification is a separate test gate.
 
 ```julia
 using JuMP, GHOST
@@ -28,7 +29,9 @@ value.(x)
 
 Supported model classes: bounded integer and binary variables, affine
 equalities/inequalities/intervals, `MOI.AllDifferent`, scoped Julia error
-constraints, and affine minimization/maximization. Continuous, unbounded,
+constraints, affine minimization/maximization and scoped callback objectives
+via `GHOST.set_callback_objective(model, MOI.MIN_SENSE, variables, callable)`.
+Continuous, unbounded,
 quadratic and generic nonlinear models are unsupported. Domains are explicit
 and limited to fewer than ten million integers per variable. An empty integer
 domain is rejected. Models require at least one variable.
@@ -55,7 +58,8 @@ explicitly. Original Boolean concepts independently validate exported solutions.
 The recovered bank contains manually selected ICN witnesses encoded in a
 learnable grammar, previously checked on the recorded finite assignments. It
 does not establish that these weights came from a training run, nor universal
-qualification of every variant. This port still needs its own tests. That
+qualification of every variant. The port's tests independently check those
+zero sets on small exhaustive assignments. That
 provenance is available in the catalogue and each session's evaluator metadata.
 There is no implicit substitution of a Boolean penalty for a missing ICN.
 
@@ -70,6 +74,9 @@ using CompositionalNetworks
 An ICN or `Composition` retains its selected operations and parameters. Each
 solve binds a compiled function and a private `composition_workspace`. The
 first evaluation prepares the generated function before the timed search.
+Direct ICNs use compiled functions and private matrix buffers. Compound ICNs
+use the pinned library's decoded callable with private network state; this
+version does not expose a compiled workspace interface for those compositions.
 No learning or operation replacement occurs implicitly. A learned error's zero
 set must still be qualified against the original problem's validator; the
 optimizer checks its declared MOI constraints, not an unstated original intent.
@@ -107,8 +114,9 @@ required. `test/interface.jl` exercises MOI model construction/copying, and
 `test/native.jl`, `test/icn.jl` and `test/catalogue.jl` qualify results, original
 concept/ICN zero-set agreement, exception boundaries and
 independent worker state. These are bounded functional tests, not a solver
-comparison campaign. The test sources are prepared; execution is pending the
-current resource gate. No performance claim is based on this preparation.
+comparison campaign. On 7 October 2026, all 1,665 frontend assertions passed
+locally with two Julia threads; the native C ABI tests also passed on all five
+distribution platforms. No performance claim is based on this preparation.
 
 The interface follows the official
 [MOI solver implementation guide](https://jump.dev/MathOptInterface.jl/stable/tutorials/implementing/)
