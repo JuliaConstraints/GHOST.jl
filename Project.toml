@@ -15,7 +15,7 @@ SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 
 [sources]
-GHOST_jll = {path = "../GHOST_jll"}
+GHOST_jll = {url = "https://gitlab.naze.baffier.fr/others/GHOST_jll.jl.git", rev = "d247ca5c07159f712c6c7694f5803336ee3c987e"}
 CompositionalNetworks = {url = "https://gitlab.naze.baffier.fr/others/CompositionalNetworks.jl.git", rev = "fe5d21f31797d93391552919abc3d6e7a6db92d9"}
 ConstraintProgrammingExtensions = {url = "https://gitlab.naze.baffier.fr/others/ConstraintProgrammingExtensions.jl.git", rev = "04f270eaa8bf1a8cf07a4848225dcd77fee14cd3"}
 Constraints = {url = "https://gitlab.naze.baffier.fr/others/Constraints.jl.git", rev = "2b3897c3dba21ca26f0a467a958ace8de3d4128f"}
