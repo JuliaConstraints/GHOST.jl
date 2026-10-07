@@ -1,0 +1,202 @@
+format = "keyword-genotype-witness-v2"
+provenance = "Recovered manually selected witnesses in a learnable grammar; no new training"
+source_bank_sha256 = "61225eadc114677498e781befe67afbbcab98b480f81c5b7b0f2e0009297ecaf"
+
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 320
+decoded = "composition(x) = sum(count_equal_left(x))"
+factory = "learnable_composition; max_depth=1"
+family = "all_different"
+formula = "sum_i count(j<i: x[j]=x[i])"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 48
+schema = "ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :nonzero]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id])"
+schema_sha256 = "cceaec644790b0424a50239706e1e5dd5ecef1d8c349ab066c93be92ff95e74d"
+signature = "NamedTuple()"
+variant = "numeric list"
+view_slots = "nothing"
+violated = 272
+weights = [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, true]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 320
+decoded = "composition(x) = sum(elementwise_sum([count_great_left(x), count_less_left(x)]))"
+factory = "learnable_composition; max_depth=1"
+family = "all_equal"
+formula = "sum_i count(j<i: x[j]!=x[i])"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 8
+schema = "ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :nonzero]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id])"
+schema_sha256 = "cceaec644790b0424a50239706e1e5dd5ecef1d8c349ab066c93be92ff95e74d"
+signature = "NamedTuple()"
+variant = "numeric list"
+view_slots = "nothing"
+violated = 312
+weights = [false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, true]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 320
+decoded = "composition(x) = sum(count_great_left(x))"
+factory = "learnable_composition; max_depth=1"
+family = "ordered"
+formula = "sum_i count(j<i: x[j]>x[i])"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = "Nondecreasing, without offsets"
+satisfied = 55
+schema = "ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :nonzero]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id])"
+schema_sha256 = "cceaec644790b0424a50239706e1e5dd5ecef1d8c349ab066c93be92ff95e74d"
+signature = "NamedTuple()"
+variant = "numeric list"
+view_slots = "nothing"
+violated = 265
+weights = [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, true]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 1920
+decoded = "composition(x) = condition_residual(sum(x))"
+factory = "learnable_composition; max_depth=1"
+family = "sum"
+formula = "r_op(sum(x), val)"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 1174
+schema = "ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :nonzero, :first_equal_position, :condition_residuals]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :count_op_val, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :condition_residual, :abs_val, :val_minus_var, :var_minus_val])"
+schema_sha256 = "c232df131ecc90c9ece3a293e83aec0a471715c36475751535b6eb1aa46c21e6"
+signature = "(op = ==, val = 2)"
+variant = "scalar condition"
+view_slots = "nothing"
+violated = 746
+weights = [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 1920
+decoded = "composition(x) = condition_residual(minimum(x))"
+factory = "learnable_composition; max_depth=1"
+family = "minimum"
+formula = "r_op(minimum(x), val)"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 986
+schema = "ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :nonzero, :first_equal_position, :condition_residuals]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :count_op_val, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :condition_residual, :abs_val, :val_minus_var, :var_minus_val])"
+schema_sha256 = "c232df131ecc90c9ece3a293e83aec0a471715c36475751535b6eb1aa46c21e6"
+signature = "(op = ==, val = 2)"
+variant = "scalar condition"
+view_slots = "nothing"
+violated = 934
+weights = [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 1920
+decoded = "composition(x) = condition_residual(maximum(x))"
+factory = "learnable_composition; max_depth=1"
+family = "maximum"
+formula = "r_op(maximum(x), val)"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 1468
+schema = "ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :nonzero, :first_equal_position, :condition_residuals]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :count_op_val, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :condition_residual, :abs_val, :val_minus_var, :var_minus_val])"
+schema_sha256 = "c232df131ecc90c9ece3a293e83aec0a471715c36475751535b6eb1aa46c21e6"
+signature = "(op = ==, val = 2)"
+variant = "scalar condition"
+view_slots = "nothing"
+violated = 452
+weights = [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 3840
+decoded = "composition(x) = condition_residual(sum(prod(x)))"
+factory = "learnable_composition; max_depth=1"
+family = "sum"
+formula = "r_op(sum_i x[i]*pair_vars[i], val)"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 2144
+schema = "ICN:(:PairedMap, true, [:id, :sub, :sum, :prod, :adjacent_left_affine_margins, :aligned_not_equal, :aligned_difference, :gather]);(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :nonzero, :first_equal_position, :condition_residuals]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :count_op_val, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :condition_residual, :abs_val, :val_minus_var, :var_minus_val])"
+schema_sha256 = "404e4b04ce943430527cf09933007bc7b2c51a5bf1bef3f1674c6e26ee3312da"
+signature = "(pair_vars = [1, 2, 3], op = ==, val = 2)"
+variant = "weighted scalar condition"
+view_slots = "nothing"
+violated = 1696
+weights = [false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 324
+decoded = "composition(x) = sum(aligned_not_equal(x))"
+factory = "learnable_composition; max_depth=1"
+family = "instantiation"
+formula = "sum_i [x[i] != pair_vars[i]]"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 128
+schema = "ICN:(:PairedMap, true, [:id, :sub, :sum, :prod, :adjacent_left_affine_margins, :aligned_not_equal, :aligned_difference, :gather]);(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :nonzero]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id])"
+schema_sha256 = "362ca92cd11d34da5bde65b674ed16aab7020e68558341034b7a653308d078a3"
+signature = "(pair_vars = [1, 2, 3],)"
+variant = "numeric target vector"
+view_slots = "nothing"
+violated = 196
+weights = [false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, true]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 7680
+decoded = "composition(x) = composed{node1(x) = condition_residual(count_elements(filter_equal_vals(x))); input=CompositionalNetworks.InputReference{Tuple{}}(()); bindings=(vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()), op = CompositionalNetworks.ParameterReference{Tuple{}}(:op, ()), val = CompositionalNetworks.ParameterReference{Tuple{}}(:val, ())); repeat=:once; reduce=forall_sum; node2(x) = sum(x); input=CompositionalNetworks.InputReference{Tuple{}}(()); bindings=(vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()), op = CompositionalNetworks.ParameterReference{Tuple{}}(:op, ()), val = CompositionalNetworks.ParameterReference{Tuple{}}(:val, ())); repeat=:vals; reduce=forall_sum; outputs=[1]; reduce=forall_sum}"
+factory = "learnable_composition; max_depth=1"
+family = "count"
+formula = "r_op(count_i(x[i] in vals), val)"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 4788
+schema = "Composed:(:forall_sum,)ICN:(:SimpleFilter, true, [:id, :filter_unique, :filter_op_val, :filter_equal_val, :filter_ge_val, :filter_great_val, :filter_less_val, :filter_le_val, :filter_ne_val, :filter_op_vals, :filter_equal_vals, :filter_ne_vals]);(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :var_minus_vals, :vals_minus_var, :nonzero, :first_equal_position, :condition_residuals]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :count_op_val, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :condition_residual, :abs_val, :val_minus_var, :var_minus_val, :vals_minus_var_gele, :vals_minus_var_gl])((CompositionalNetworks.InputReference{Tuple{}}(()),), ((vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()), op = CompositionalNetworks.ParameterReference{Tuple{}}(:op, ()), val = CompositionalNetworks.ParameterReference{Tuple{}}(:val, ())),), (:once,), (:forall_sum,));ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :nonzero, :first_equal_position, :condition_residuals]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :count_op_val, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :condition_residual, :abs_val, :val_minus_var, :var_minus_val])((CompositionalNetworks.InputReference{Tuple{}}(()),), ((vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()), op = CompositionalNetworks.ParameterReference{Tuple{}}(:op, ()), val = CompositionalNetworks.ParameterReference{Tuple{}}(:val, ())),), (:vals,), (:forall_sum, :forall_max, :exists_min, :exists_product))"
+schema_sha256 = "e17cd529c95b74d3a30da91a9f27d6d43ef2458e984b907fe305ab9c4ea0bff8"
+signature = "(vals = [0], op = ==, val = 2)"
+variant = "membership and scalar condition"
+view_slots = "nothing"
+violated = 2892
+weights = [false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, true, true, false, false, false, true, false, true]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 5760
+decoded = "composition(x) = composed{node1(x) = condition_residual(count_zero(count_equal_left(filter_ne_vals(x)))); input=CompositionalNetworks.InputReference{Tuple{}}(()); bindings=(vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()), op = CompositionalNetworks.ParameterReference{Tuple{}}(:op, ()), val = CompositionalNetworks.ParameterReference{Tuple{}}(:val, ())); repeat=:once; reduce=forall_sum; node2(x) = sum(x); input=CompositionalNetworks.InputReference{Tuple{}}(()); bindings=(vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()), op = CompositionalNetworks.ParameterReference{Tuple{}}(:op, ()), val = CompositionalNetworks.ParameterReference{Tuple{}}(:val, ())); repeat=:vals; reduce=forall_sum; outputs=[1]; reduce=forall_sum}"
+factory = "learnable_composition; max_depth=1"
+family = "nvalues"
+formula = "r_op(number of distinct values in filter_not_in(x, vals), val)"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 4224
+schema = "Composed:(:forall_sum,)ICN:(:SimpleFilter, true, [:id, :filter_unique, :filter_op_val, :filter_equal_val, :filter_ge_val, :filter_great_val, :filter_less_val, :filter_le_val, :filter_ne_val, :filter_op_vals, :filter_equal_vals, :filter_ne_vals]);(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :var_minus_vals, :vals_minus_var, :nonzero, :first_equal_position, :condition_residuals]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :count_op_val, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :condition_residual, :abs_val, :val_minus_var, :var_minus_val, :vals_minus_var_gele, :vals_minus_var_gl])((CompositionalNetworks.InputReference{Tuple{}}(()),), ((vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()), op = CompositionalNetworks.ParameterReference{Tuple{}}(:op, ()), val = CompositionalNetworks.ParameterReference{Tuple{}}(:val, ())),), (:once,), (:forall_sum,));ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :nonzero, :first_equal_position, :condition_residuals]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :count_op_val, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :condition_residual, :abs_val, :val_minus_var, :var_minus_val])((CompositionalNetworks.InputReference{Tuple{}}(()),), ((vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()), op = CompositionalNetworks.ParameterReference{Tuple{}}(:op, ()), val = CompositionalNetworks.ParameterReference{Tuple{}}(:val, ())),), (:vals,), (:forall_sum, :forall_max, :exists_min, :exists_product))"
+schema_sha256 = "e17cd529c95b74d3a30da91a9f27d6d43ef2458e984b907fe305ab9c4ea0bff8"
+signature = "(vals = [0], op = ==, val = 2)"
+variant = "exceptions and scalar condition"
+view_slots = "nothing"
+violated = 1536
+weights = [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, true, true, false, false, false, true, false, true]
+[[witnesses]]
+binding_runtime = "NamedTuple()"
+binding_sample = "nothing"
+checked = 960
+decoded = "composition(x) = composed{node1(x) = sum(count_equal_left(filter_ne_vals(x))); input=CompositionalNetworks.InputReference{Tuple{}}(()); bindings=(vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()),); repeat=:once; reduce=forall_sum; node2(x) = sum(x); input=CompositionalNetworks.InputReference{Tuple{}}(()); bindings=(vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()),); repeat=:vals; reduce=forall_sum; outputs=[1]; reduce=forall_sum}"
+factory = "learnable_composition; max_depth=1"
+family = "all_different"
+formula = "sum_i equal_left_counts(filter_not_in(x, vals))[i]"
+input_reference = "CompositionalNetworks.InputReference{Tuple{}}(())"
+restriction = ""
+satisfied = 327
+schema = "Composed:(:forall_sum,)ICN:(:SimpleFilter, true, [:id, :filter_unique, :filter_equal_vals, :filter_ne_vals]);(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :var_minus_vals, :vals_minus_var, :nonzero]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :vals_minus_var_gele, :vals_minus_var_gl])((CompositionalNetworks.InputReference{Tuple{}}(()),), ((vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()),),), (:once,), (:forall_sum,));ICN:(:Transformation, false, [:id, :absolute, :positive_part, :predecessor_counts, :orbit_exclusion_indicators, :nonfixed_indicators, :disjoint_pair_differences, :count_equal_right, :count_less_right, :count_great_right, :count_equal_left, :count_less_left, :count_great_left, :count_equal_val, :count_less_val, :count_great_val, :var_minus_val, :val_minus_var, :contiguous_vars_minus, :contiguous_vars_minus_rev, :count_equal, :count_less, :count_great, :count_bounding_val, :nonzero, :first_equal_position]);(:Arithmetic, true, [:sum, :product, :difference]);(:Aggregation, true, [:sum, :count_elements, :count_zero, :count_positive, :maximum, :minimum, :first_or_zero, :argmin, :argmax]);(:Comparison, true, [:id, :abs_val, :val_minus_var, :var_minus_val])((CompositionalNetworks.InputReference{Tuple{}}(()),), ((vals = CompositionalNetworks.ParameterReference{Tuple{}}(:vals, ()),),), (:vals,), (:forall_sum, :forall_max, :exists_min, :exists_product))"
+schema_sha256 = "cbb3b7f1f90ab7f7f89dc3dac5d2aef6ddd8e527f00303e4cdc2a23f11a456ad"
+signature = "(vals = [0],)"
+variant = "exceptions"
+view_slots = "nothing"
+violated = 633
+weights = [false, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, true, false, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, true, true, true, true, false, false, false, true, false, true]

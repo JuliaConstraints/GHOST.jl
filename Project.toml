@@ -1,0 +1,39 @@
+name = "GHOST"
+uuid = "11b06263-fdad-4e56-a327-8fd38a91e0b8"
+authors = ["Jean-François Baffier"]
+version = "0.2.0"
+
+[deps]
+CompositionalNetworks = "4b67e4b5-442d-4ef5-b760-3f5df3a57537"
+ConstraintProgrammingExtensions = "b65d079e-ed98-51d9-b0db-edee61a5c5f8"
+Constraints = "30f324ab-b02d-43f0-b619-e131c61659f7"
+GHOST_jll = "8d604a99-d805-502d-a593-62e3c19f5ba4"
+JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+MathOptInterface = "b8f27783-ece8-5eb3-8dc8-9495eed66fee"
+SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
+
+[sources]
+GHOST_jll = {path = "../GHOST_jll"}
+CompositionalNetworks = {url = "https://gitlab.naze.baffier.fr/others/CompositionalNetworks.jl.git", rev = "fe5d21f31797d93391552919abc3d6e7a6db92d9"}
+ConstraintProgrammingExtensions = {url = "https://gitlab.naze.baffier.fr/others/ConstraintProgrammingExtensions.jl.git", rev = "04f270eaa8bf1a8cf07a4848225dcd77fee14cd3"}
+Constraints = {url = "https://gitlab.naze.baffier.fr/others/Constraints.jl.git", rev = "2b3897c3dba21ca26f0a467a958ace8de3d4128f"}
+
+[compat]
+CompositionalNetworks = "0.6.2"
+ConstraintProgrammingExtensions = "0.8.1"
+Constraints = "0.5.11"
+GHOST_jll = "3.5.0"
+JuMP = "1"
+Libdl = "1"
+MathOptInterface = "1.48"
+SHA = "0.7"
+TOML = "1"
+julia = "1.12"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
