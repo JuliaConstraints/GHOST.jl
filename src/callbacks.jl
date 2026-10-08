@@ -6,6 +6,16 @@ mutable struct CallbackState{F}
     objective::Bool
 end
 
+# Run the whole evaluator barrier in the latest world. Its concrete state keeps
+# counters and validation typed while supporting ICNs compiled after the C trampoline.
+function _evaluate_callback!(state::CallbackState)
+    state.calls += 1
+    score = Float64(state.f(state.values))::Float64
+    isfinite(score) || throw(DomainError(score, "error functions must return a finite score"))
+    state.objective || score >= 0 || throw(DomainError(score, "error functions must return a nonnegative score"))
+    score
+end
+
 function _callback(values::Ptr{Cint}, count::Csize_t, result::Ptr{Cdouble}, userdata::Ptr{Cvoid})::Cint
     state = unsafe_pointer_to_objref(userdata)::CallbackState
     try
@@ -13,11 +23,7 @@ function _callback(values::Ptr{Cint}, count::Csize_t, result::Ptr{Cdouble}, user
         @inbounds for i in eachindex(state.values)
             state.values[i] = unsafe_load(values, i)
         end
-        state.calls += 1
-        # Compiled ICNs can be generated after this trampoline's world age.
-        score = Float64(Base.invokelatest(state.f, state.values))
-        isfinite(score) || throw(DomainError(score, "error functions must return a finite score"))
-        state.objective || score >= 0 || throw(DomainError(score, "error functions must return a nonnegative score"))
+        score = Base.invokelatest(_evaluate_callback!, state)::Float64
         unsafe_store!(result, score)
         return CAPI.SUCCESS
     catch error

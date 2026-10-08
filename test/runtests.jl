@@ -5,4 +5,5 @@ import CompositionalNetworks as CN
 include("interface.jl")
 include("native.jl")
 include("icn.jl")
+include("callback_barriers.jl")
 include("catalogue.jl")
