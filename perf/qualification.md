@@ -78,3 +78,36 @@ and result/status invalidation. The existing Test extra now has a compatibility
 bound. Full Aqua passed, and all 1,711 assertions in the bounded one-native-worker
 qualification passed. This corrects the two quality limitations above without
 changing native solver behavior or callback score semantics.
+
+## Private output cell and input lookup
+
+The final callback increment gives each state an owned Float64 output cell. The
+latest-world barrier returns `nothing`, avoiding a boxed floating-point return.
+The trampoline loads its private input vector once before copying; previously
+the erased state repeated a symbol/field lookup inside the copy loop. Its output
+cell occupies the first field, accessed with Julia's checked field-index API.
+The five-argument CallbackState construction interface is preserved. One output
+cell is added per registered callback; no native destination pointer is retained.
+
+A same-process fixed-work check loaded the exact `f8943157` callback source into
+an isolated Julia module, then alternated the old and new implementations in a
+seeded order. Each operation made 100,000 real C-trampoline calls on the same
+three-value ordinary error. Before: 1,600,016 bytes / 100,001 objects, times
+.005908680/.005840570/.005730981 s. After: 16 bytes / 1 object, times
+.003376229/.003646232/.003425342 s. The remaining single object is measurement
+overhead; the callback-only regression allocates at most 128 bytes over 1,024
+calls. Compilation, collection time and locks did not contribute. This is an
+operational component diagnostic, not a solver campaign or native scaling test.
+
+The scenario harness on an already exercised ICN binding used a constant 288
+bytes / 7 objects from 32 to 8,192 callbacks, rather than per-callback growth.
+All 1,712 bounded native/interface/ICN assertions and full Aqua passed. Concrete
+ordinary and ICN evaluator barriers still have zero JET and AllocCheck findings.
+
+All four PerfChecker collectors reran both final callback cases with passing
+oracles. Ordinary callbacks used 288–304 bytes / 5–6 objects and about
+.000085–.000089 s for 2,048 calls. Fresh private ICN BenchmarkTools scope still
+included approximately 501,456 bytes / 10,057 objects and .015–.016 s; Chairmarks
+and allocation profiling used 2,000 bytes / 36 objects. Distinct new callable
+types and their harness specialization remain cold setup costs, separate from
+the warmed callback path. Raw source/LLVM dumps and helper files were not saved.

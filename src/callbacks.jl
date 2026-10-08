@@ -1,10 +1,14 @@
 mutable struct CallbackState{F}
+    # The erased trampoline can load this first, concrete field directly.
+    score::Base.RefValue{Float64}
     f::F
     values::Vector{Int}
     failure::Any
     calls::Int
     objective::Bool
 end
+CallbackState(f,values,failure,calls,objective)=
+    CallbackState(Ref{Float64}(NaN),f,values,failure,calls,objective)
 
 # Run the whole evaluator barrier in the latest world. Its concrete state keeps
 # counters and validation typed while supporting ICNs compiled after the C trampoline.
@@ -13,18 +17,21 @@ function _evaluate_callback!(state::CallbackState)
     score = Float64(state.f(state.values))::Float64
     isfinite(score) || throw(DomainError(score, "error functions must return a finite score"))
     state.objective || score >= 0 || throw(DomainError(score, "error functions must return a nonnegative score"))
-    score
+    state.score[]=score
+    nothing
 end
 
 function _callback(values::Ptr{Cint}, count::Csize_t, result::Ptr{Cdouble}, userdata::Ptr{Cvoid})::Cint
     state = unsafe_pointer_to_objref(userdata)::CallbackState
     try
-        length(state.values) == count || throw(DimensionMismatch("GHOST callback scope"))
-        @inbounds for i in eachindex(state.values)
-            state.values[i] = unsafe_load(values, i)
+        input = state.values
+        length(input) == count || throw(DimensionMismatch("GHOST callback scope"))
+        @inbounds for i in eachindex(input)
+            input[i] = unsafe_load(values, i)
         end
-        score = Base.invokelatest(_evaluate_callback!, state)::Float64
-        unsafe_store!(result, score)
+        Base.invokelatest(_evaluate_callback!, state)
+        # Use the fixed first field without a runtime symbol-to-field lookup.
+        unsafe_store!(result, (getfield(state,1)::Base.RefValue{Float64})[])
         return CAPI.SUCCESS
     catch error
         state.failure === nothing && (state.failure = CapturedException(error, catch_backtrace()))

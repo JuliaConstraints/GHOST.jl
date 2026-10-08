@@ -25,11 +25,12 @@ end
         @test state.failure===nothing
     end
     @test states[1].values!==states[2].values
+    @test states[1].score!==states[2].score
     states[1].values[1]=99
     @test states[2].values==[1,2,3]
     @test values==Cint[1,2,3]
     callback_cycles(states[1],values,result,1024)
-    @test (@allocated callback_cycles(states[1],values,result,1024))<=17_000
+    @test (@allocated callback_cycles(states[1],values,result,1024))<=128
 end
 
 @testset "Native exception boundary retains the first failure" begin
