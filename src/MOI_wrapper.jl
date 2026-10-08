@@ -65,7 +65,11 @@ function MOI.add_variable(optimizer::Optimizer)
     return MOI.add_variable(optimizer.cache)
 end
 MOI.add_variables(optimizer::Optimizer, count::Int) = [MOI.add_variable(optimizer) for _ in 1:count]
-function MOI.delete(optimizer::Optimizer, index::Union{MOI.VariableIndex,MOI.ConstraintIndex,Vector{MOI.VariableIndex},Vector{<:MOI.ConstraintIndex}})
+function MOI.delete(optimizer::Optimizer, index::Union{MOI.VariableIndex,MOI.ConstraintIndex})
+    _invalidate!(optimizer)
+    return MOI.delete(optimizer.cache, index)
+end
+function MOI.delete(optimizer::Optimizer, index::Union{Vector{MOI.VariableIndex},Vector{<:MOI.ConstraintIndex}})
     _invalidate!(optimizer)
     return MOI.delete(optimizer.cache, index)
 end

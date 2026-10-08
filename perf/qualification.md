@@ -67,3 +67,14 @@ Aqua executed and identified two preexisting package-quality issues: an MOI
 single-index deletion ambiguity and a missing Test-extra compatibility bound.
 The callback increment does not claim a full Aqua pass. Bulk profiles, raw
 snapshots and temporary diagnostic environments are not committed.
+
+## Deletion and quality qualification
+
+The subsequent interface increment splits single-index and vector-index MOI
+deletion methods, resolving the ambiguity with MOI's generic single-index method.
+Both still invalidate and destroy the owned native session before editing the
+cache. Ten regressions cover both index forms, cache validity, session destruction
+and result/status invalidation. The existing Test extra now has a compatibility
+bound. Full Aqua passed, and all 1,711 assertions in the bounded one-native-worker
+qualification passed. This corrects the two quality limitations above without
+changing native solver behavior or callback score semantics.

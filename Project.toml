@@ -21,6 +21,7 @@ ConstraintProgrammingExtensions = {url = "https://github.com/JuliaConstraints/Co
 Constraints = {url = "https://github.com/JuliaConstraints/Constraints.jl.git", rev = "9c9adabfe84f395aa3dd58eec6405c8e41020ffa"}
 
 [compat]
+Test = "1"
 CompositionalNetworks = "0.6.2"
 ConstraintProgrammingExtensions = "0.8.1"
 Constraints = "0.5.11"

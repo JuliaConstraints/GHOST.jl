@@ -37,3 +37,26 @@
     @test num_variables(model) == 3
     @test num_constraints(model; count_variable_in_set_constraints=false) == 1
 end
+
+@testset "Single and vector MOI deletion invalidate native ownership" begin
+    optimizer=GHOST.Optimizer()
+    variables=MOI.add_variables(optimizer,4)
+    constraints=[MOI.add_constraint(optimizer,variable,MOI.Integer()) for variable in variables]
+    MOI.delete(optimizer,first(constraints))
+    @test !MOI.is_valid(optimizer,first(constraints))
+    MOI.delete(optimizer,constraints[2:3])
+    @test all(index->!MOI.is_valid(optimizer,index),constraints[2:3])
+    MOI.delete(optimizer,first(variables))
+    @test !MOI.is_valid(optimizer,first(variables))
+    MOI.delete(optimizer,variables[2:3])
+    @test all(index->!MOI.is_valid(optimizer,index),variables[2:3])
+    @test MOI.get(optimizer,MOI.NumberOfVariables())==1
+    @test MOI.is_valid(optimizer,last(variables))
+    session=GHOST.CAPI.Session(false)
+    optimizer.session=session
+    MOI.delete(optimizer,last(constraints))
+    @test session.ptr==C_NULL
+    @test optimizer.session===nothing
+    @test MOI.get(optimizer,MOI.ResultCount())==0
+    @test MOI.get(optimizer,MOI.TerminationStatus())==MOI.OPTIMIZE_NOT_CALLED
+end
